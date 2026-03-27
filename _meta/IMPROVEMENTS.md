@@ -23,6 +23,28 @@ Add an entry whenever something works better than expected, fails, or could be d
 
 ## Log
 
+### 2026-03-27 — Rebranded to MetaTemplate
+**Observation:** "AI-Assisted Project Management" was too narrow — implied only project tracking, excluded coding, daily tasks, health tracking, and other effort types.
+**Recommendation:** Use "MetaTemplate" as the name going forward. It connects to the existing `_meta/` structure, signals "a template for how to work" rather than a specific work type, and avoids scope-limiting language. Update all references: presentation, README, GitHub description, and any future marketing materials.
+**Status:** Done
+
+### 2026-03-27 — SESSION.md split into SESSION.md + CONTEXT.md
+**Observation:** SESSION.md was accumulating static personal context alongside active project state. As more projects are added, it would grow and become expensive to load every session.
+**Recommendation:** SESSION.md = pointer table + immediate focus only. Static context (who Kerry is, working convention, file map) moved to CONTEXT.md — loaded on demand. This pattern should be reflected in the _template/ files.
+**Status:** Done
+
+### 2026-03-27 — Three-effort structure defined
+**Observation:** The workspace has three distinct efforts with different scopes, audiences, and privacy requirements: Home/Personal, Template Build, and Health. These need to be clearly separated so each can evolve independently.
+**Recommendation:** Each effort gets its own project_plan.md + status.md. Health stays completely separate at kAI2026/. This structure is the template pattern proven in real use.
+**Status:** Done
+
+### 2026-03-27 — Active Work section needed in status.md files
+**Observation:** Sessions were losing in-progress context because status files only tracked project-level state, not what was actively happening mid-session.
+**Recommendation:** Every status.md should have an "Active Work" section at the top that gets updated during the session. This is the primary mechanism for session continuity.
+**Status:** Done — added to home/status.md and template/status.md; should be added to _template/status.md when created
+
+
+
 ### 2026-03-27 — Template must be portable and AI-agnostic
 **Observation:** The end goal is to package the template so it can be handed to someone else and used with any AI assistant — Claude, GitHub Copilot Agent, or others.
 **Recommendation:** Three things need to change or be added:

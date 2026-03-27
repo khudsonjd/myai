@@ -9,6 +9,32 @@ Why the system is structured the way it is. Read this before changing the struct
 
 ---
 
+## Three-Effort Structure (Home, Template, Health)
+
+The kAI workspace organizes work into three distinct efforts, each self-contained:
+
+1. **Home/Personal** — operational project tracking (home, garden, life)
+2. **Template Build** — building the reusable, shareable template system
+3. **Health** — personal health tracking; private and completely separate
+
+Each effort follows the same pattern: `project_plan.md` (stable goals/reference) + `status.md` (current state). This is the template pattern proven in practice.
+
+**Health is the exception:** Lives at `C:\Users\kerry\OneDrive\kAI2026\` — never referenced by content in kAI files, only as a pointer. Health data never appears in template or meta files.
+
+**Flexibility is a core requirement:** This three-effort structure is a starting point. It can evolve — new efforts can be added, renamed, or split. The pattern (project_plan + status) stays consistent even as the content changes.
+
+---
+
+## SESSION.md Stays Small — CONTEXT.md Holds Static Info
+
+**Decision:** SESSION.md contains only the Active Projects table and Immediate Focus. Nothing else.
+
+**Why:** SESSION.md is loaded every session. If it holds static personal context, file maps, working conventions, and project details, it grows with every new project and becomes expensive to load. Keeping it to a pointer table means it never grows past ~15 lines regardless of how many projects exist.
+
+Static context (who Kerry is, working convention, property info, file map) lives in `CONTEXT.md` — loaded on demand when deep orientation is needed, not every session.
+
+---
+
 ## Template Lives Inside kAI Until "Prepare for Sharing"
 
 The `_template/` and `_meta/` folders currently live inside `kAI/` alongside the home project. This is intentional — the home project is actively informing the template, and separating them now creates overhead with no benefit.

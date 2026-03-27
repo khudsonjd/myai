@@ -1,10 +1,12 @@
 # Private project data — never publish
 home/
 health/
+template/
 
-# Personal session files — machine/user specific
+# Personal session and context files — machine/user specific
 /SESSION.md
 /CLAUDE.md
+/CONTEXT.md
 
 # Claude Code internals
 .claude/
