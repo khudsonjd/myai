@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetaTemplate — Overview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Progress bar */
+  #progress { height: 3px; background: #1e2330; width: 100%; }
+  #progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    transition: width 0.4s ease;
+  }
+
+  /* Slide container */
+  #slides {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px 32px;
+    overflow: hidden;
+  }
+
+  .slide {
+    display: none;
+    max-width: 900px;
+    width: 100%;
+    animation: fadeIn 0.35s ease;
+  }
+  .slide.active { display: flex; flex-direction: column; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Nav */
+  #nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+  }
+  button {
+    background: #1e2330;
+    border: 1px solid #2d3448;
+    color: #94a3b8;
+    padding: 8px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+  }
+  button:hover { background: #2d3448; color: #e2e8f0; }
+  #slide-counter { color: #4b5568; font-size: 0.85rem; min-width: 60px; text-align: center; }
+
+  /* Copyright */
+  #copyright {
+    text-align: center;
+    color: #374151;
+    font-size: 0.7rem;
+    padding-bottom: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin-bottom: 14px;
+  }
+  .hero {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #6366f1, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+  .tagline {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    max-width: 620px;
+  }
+  .section-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #6366f1;
+    margin-bottom: 20px;
+  }
+
+  /* ─── SLIDE 1: WHAT ─── */
+  .what-layout {
+    display: flex;
+    gap: 56px;
+    align-items: center;
+    width: 100%;
+  }
+  .what-left { flex: 1; }
+  .what-right {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .use-card {
+    background: #1a1d2e;
+    border: 1px solid #2d3448;
+    border-radius: 12px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .use-card .icon { font-size: 1.6rem; }
+  .use-card .label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f1f5f9;
+  }
+  .use-card .desc {
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.4;
+  }
+
+  /* ─── SLIDE 2: WHY ─── */
+  .why-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+  }
+  .compare {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+  }
+  .compare-col {
+    flex: 1;
+    border-radius: 14px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .compare-col.before {
+    background: #1a1117;
+    border: 1px solid #3d1f2b;
+  }
+  .compare-col.after {
+    background: #111a1d;
+    border: 1px solid #1f3d4a;
+  }
+  .compare-col .col-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .before .col-label { color: #f43f5e; }
+  .after .col-label  { color: #22d3ee; }
+  .compare-col .big {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #f1f5f9;
+  }
+  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .pain-list li {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .before .pain-list li::before { content: "✕"; position: absolute; left: 0; color: #f43f5e; font-size: 0.75rem; top: 1px; }
+  .after  .pain-list li::before { content: "✓"; position: absolute; left: 0; color: #22d3ee; font-size: 0.75rem; top: 1px; }
+
+  /* ─── SLIDE 3: HOW ─── */
+  .how-layout {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .how-left { flex: 1.1; }
+  .how-right { flex: 0.9; display: flex; flex-direction: column; gap: 12px; }
+
+  .files-diagram {
+    background: #1a1d2e;
+    border: 1px solid #2d3448;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .file-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .file-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .file-icon.blue   { background: #1e2a5e; border: 1px solid #3b4fcf; }
+  .file-icon.purple { background: #2a1e5e; border: 1px solid #7c3aed; }
+  .file-icon.teal   { background: #1e3d4a; border: 1px solid #0891b2; }
+  .file-icon.green  { background: #1e3a2a; border: 1px solid #059669; }
+  .file-info { display: flex; flex-direction: column; gap: 2px; }
+  .file-name { font-size: 0.8rem; font-weight: 600; color: #e2e8f0; font-family: 'Courier New', monospace; }
+  .file-role { font-size: 0.72rem; color: #64748b; }
+
+  .flow-arrow {
+    text-align: center;
+    color: #4b5568;
+    font-size: 1.1rem;
+    margin: 4px 0;
+  }
+  .ai-box {
+    background: linear-gradient(135deg, #1e1b4b, #2e1065);
+    border: 1px solid #4f46e5;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #a78bfa;
+  }
+
+  .step-card {
+    background: #1a1d2e;
+    border: 1px solid #2d3448;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .step-text { display: flex; flex-direction: column; gap: 3px; }
+  .step-title { font-size: 0.85rem; font-weight: 600; color: #f1f5f9; }
+  .step-detail { font-size: 0.75rem; color: #64748b; line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<div id="progress"><div id="progress-fill" style="width:33%"></div></div>
+
+<div id="slides">
+
+  <!-- SLIDE 1: WHAT -->
+  <div class="slide active">
+    <div class="eyebrow">What</div>
+    <div class="what-layout">
+      <div class="what-left">
+        <div class="hero">Work with AI.<br>Pick up anywhere.</div>
+        <div class="tagline">MetaTemplate is a file-based framework that gives your AI assistant persistent context — across every session, tool, and type of work.</div>
+      </div>
+      <div class="what-right">
+        <div class="use-card">
+          <div class="icon">🏗️</div>
+          <div class="label">Projects</div>
+          <div class="desc">Track goals, tasks, and decisions across weeks</div>
+        </div>
+        <div class="use-card">
+          <div class="icon">💻</div>
+          <div class="label">Coding</div>
+          <div class="desc">Maintain architecture context across sessions</div>
+        </div>
+        <div class="use-card">
+          <div class="icon">📋</div>
+          <div class="label">Daily Work</div>
+          <div class="desc">Running priorities, notes, and status</div>
+        </div>
+        <div class="use-card">
+          <div class="icon">🔬</div>
+          <div class="label">Research</div>
+          <div class="desc">Accumulate findings without losing threads</div>
+        </div>
+        <div class="use-card">
+          <div class="icon">🏥</div>
+          <div class="label">Health</div>
+          <div class="desc">Protocols, history, and progress over time</div>
+        </div>
+        <div class="use-card">
+          <div class="icon">∞</div>
+          <div class="label">Anything</div>
+          <div class="desc">Any effort that benefits from continuity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: WHY -->
+  <div class="slide">
+    <div class="eyebrow">Why</div>
+    <div class="why-layout">
+      <div class="hero" style="font-size:2rem; margin-bottom:24px;">AI forgets. This fixes that.</div>
+      <div class="compare">
+        <div class="compare-col before">
+          <div class="col-label">Without MetaTemplate</div>
+          <div class="big">Every session<br>starts from zero</div>
+          <ul class="pain-list">
+            <li>Re-explain your situation every time</li>
+            <li>AI gives generic answers, not informed ones</li>
+            <li>Context builds up, then disappears</li>
+            <li>Switching tools means starting over</li>
+            <li>Only works while the chat window is open</li>
+          </ul>
+        </div>
+        <div class="compare-col after">
+          <div class="col-label">With MetaTemplate</div>
+          <div class="big">Every session<br>picks up exactly here</div>
+          <ul class="pain-list">
+            <li>AI reads the files and gets to work</li>
+            <li>Context accumulates and stays accurate</li>
+            <li>Any AI tool, same files, same result</li>
+            <li>Session ends — files updated, nothing lost</li>
+            <li>Works across weeks, months, and versions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: HOW -->
+  <div class="slide">
+    <div class="eyebrow">How</div>
+    <div class="hero" style="font-size:2rem; margin-bottom:24px;">Four files. Any effort.</div>
+    <div class="how-layout">
+      <div class="how-left">
+        <div class="section-title">The file structure</div>
+        <div class="files-diagram">
+          <div class="file-row">
+            <div class="file-icon blue">📌</div>
+            <div class="file-info">
+              <div class="file-name">SESSION.md</div>
+              <div class="file-role">Active efforts + immediate focus — loads every session</div>
+            </div>
+          </div>
+          <div class="file-row">
+            <div class="file-icon purple">👤</div>
+            <div class="file-info">
+              <div class="file-name">CONTEXT.md</div>
+              <div class="file-role">Static personal context — who you are, your setup</div>
+            </div>
+          </div>
+          <div class="file-row">
+            <div class="file-icon teal">📐</div>
+            <div class="file-info">
+              <div class="file-name">project_plan.md</div>
+              <div class="file-role">Stable reference — goals, decisions, constraints</div>
+            </div>
+          </div>
+          <div class="file-row">
+            <div class="file-icon green">⚡</div>
+            <div class="file-info">
+              <div class="file-name">status.md</div>
+              <div class="file-role">Live state — priorities, what's active, what's next</div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="ai-box">✦ AI reads → orients → gets to work</div>
+        </div>
+      </div>
+      <div class="how-right">
+        <div class="section-title">Getting started</div>
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <div class="step-title">Copy the starter files</div>
+            <div class="step-detail">Clone the repo. Copy SESSION.md, CONTEXT.md, project_plan.md, and status.md into your workspace folder.</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <div class="step-title">Fill in what you know</div>
+            <div class="step-detail">Add your project name and a one-line description. Leave the rest blank — your AI will help you build it out.</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <div class="step-title">Start working</div>
+            <div class="step-detail">Open a chat, share SESSION.md. The AI reads the files, confirms it's oriented, and you begin.</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <div class="step-title">Files stay current</div>
+            <div class="step-detail">As you work, the AI updates status.md. Next session: same command, full context, zero re-explaining.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="nav">
+  <button onclick="move(-1)">← Back</button>
+  <span id="slide-counter">1 / 3</span>
+  <button onclick="move(1)">Next →</button>
+</div>
+<div id="copyright">© 2026 Kerry Thompson</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('slide-counter');
+  const fill = document.getElementById('progress-fill');
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    fill.style.width = ((current + 1) / slides.length * 100) + '%';
+  }
+
+  function move(dir) { show(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') move(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   move(-1);
+  });
+</script>
+</body>
+</html>
