@@ -1,0 +1,10 @@
+# Private project data — never publish
+home/
+health/
+
+# Personal session files — machine/user specific
+/SESSION.md
+/CLAUDE.md
+
+# Claude Code internals
+.claude/
