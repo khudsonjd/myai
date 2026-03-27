@@ -8,5 +8,8 @@ template/
 /CLAUDE.md
 /CONTEXT.md
 
+# Memory — private, backed up via OneDrive
+_memory/
+
 # Claude Code internals
 .claude/
