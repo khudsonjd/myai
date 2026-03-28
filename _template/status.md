@@ -11,24 +11,13 @@ last_updated: YYYY-MM-DD
 
 ---
 
-## Priority Summary
+## Priority Summary — Now
 
-### Now
 | # | Item | Priority | Target Date | Status |
 |---|---|---|---|---|
 | 1 | [Item] | HIGH | [Date] | [Status] |
 
-### Soon
-| # | Item | Target Date | Notes |
-|---|---|---|---|
-
-### Anytime — Quick Wins
-| # | Item | Notes |
-|---|---|---|
-
-### Plan Ahead
-| # | Item | Notes |
-|---|---|---|
+*Full project list (Soon, Anytime, Plan Ahead) → `[workstream]/project_plan.md`*
 
 ---
 

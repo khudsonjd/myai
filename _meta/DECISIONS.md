@@ -9,6 +9,16 @@ Why the system is structured the way it is. Read this before changing the struct
 
 ---
 
+## MetaTemplate Copyright is Intentional
+
+Kerry retains explicit copyright on MetaTemplate and all published materials. The copyright line in presentations and shared files must never be removed.
+
+**Why:** Establishes clear separation between work developed on personal time (MetaTemplate, kAI) and any employment context — even if the same method is later applied at work. The copyright is evidence that this was developed independently, outside of employment, and is Kerry's personal intellectual property.
+
+**Rule:** Always include `© [year] Kerry Thompson` in any published presentation or shareable document. Do not add employer references or work-context language to MetaTemplate files.
+
+---
+
 ## Three-Effort Structure (Home, Template, Health)
 
 The kAI workspace organizes work into three distinct efforts, each self-contained:

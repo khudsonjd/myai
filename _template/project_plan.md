@@ -13,33 +13,35 @@ last_updated: YYYY-MM-DD
 
 ---
 
-## Overview
+## Priority Reference — Full List
 
-[Brief description of the project, system, or goal this plan covers.]
+### Soon
+| # | Item | Target Date | Notes |
+|---|---|---|---|
 
----
+### Anytime — Quick Wins
+| # | Item | Notes |
+|---|---|---|
 
-## [Section 1 — Key Facts and Constraints]
-
-[Stable information that doesn't change often — specs, rules, boundaries, known constraints.
-Your AI assistant will help you identify what belongs here.]
-
----
-
-## [Section 2 — Plans and Next Steps]
-
-[The actual work — broken into areas or workstreams.
-Each area should end with a clear next step.]
+### Plan Ahead
+| # | Item | Notes |
+|---|---|---|
 
 ---
 
-## [Section 3 — Methods and Decisions]
+## [Detail Section — e.g. Key Facts and Constraints]
 
-[How things get done — repeatable processes, build methods, or decisions already made.
+[Stable information that doesn't change often — specs, rules, boundaries, known constraints.]
+
+---
+
+## [Detail Section — e.g. Plans and Methods]
+
+[The actual work — repeatable processes, build methods, decisions already made.
 Document these so they don't have to be re-decided later.]
 
 ---
 
-## [Section 4 — Future / On Hold]
+## [Detail Section — e.g. Future / On Hold]
 
 [Real plans that aren't active yet — waiting on research, dependencies, or timing.]

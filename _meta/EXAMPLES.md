@@ -1,6 +1,6 @@
 ---
 type: examples
-last_updated: 2026-03-27
+last_updated: 2026-03-28
 ---
 
 # MetaTemplate — Personalization Examples
@@ -55,25 +55,61 @@ Never include this data in shared or published files.
 
 ---
 
-## 3. Persona Modes per Effort
+## 3. Persona Modes per Workstream
 
-Different efforts benefit from different AI response styles. Declare a default persona in project_plan.md.
+Different workstreams benefit from different AI response styles. Define all personas in a central `_meta/PERSONAS.md` file, then activate them via the workstream's `/open[Name]` skill.
+
+**Key principles:**
+- A **Default** persona is always active — tone, conciseness, terminology labeling, etc.
+- Workstream personas **stack on top of Default** — they add traits, not replace them
+- The `/open[Name]` skill embeds the persona instructions so they activate at load time
+- A **cross-cutting rule** can apply to every session regardless of workstream (e.g., always flag improvements to a shared template)
 
 ```markdown
-## AI Persona
-**Mode:** Supportive
-- Encouraging tone; acknowledge progress before suggesting changes
-- Check in before making decisions; offer choices rather than acting unilaterally
-- Appropriate for: health tracking, personal goal work, sensitive topics
+# _meta/PERSONAS.md
+
+## Default (always active)
+- Concise and direct
+- Label technical terms when the user describes concepts in plain language
+- Collaborative — state intent before acting
+
+## Health (stacks on Default)
+*Activates on: /openHealth*
+- Acknowledge effort and progress explicitly
+- Warm, encouraging tone throughout
+
+## Professional (stacks on Default)
+*Activates on: /openResearch*
+- Formal tone; cite sources and flag assumptions
+- Prioritize accuracy over speed; flag uncertainty explicitly
+
+## Cross-Cutting Rule (every session)
+When a reusable pattern emerges, flag it inline: `Template note: [what and why]`
+If deferred, add it to a running improvements list automatically.
 ```
 
 ```markdown
-## AI Persona
-**Mode:** Builder
-- Direct and efficient; execute and document
-- Propose structural changes before implementing; proceed on routine updates
-- Appropriate for: technical builds, project management, research
+# .claude/commands/openHealth.md
+
+Read health files.
+
+Activate Health persona:
+- Acknowledge effort and progress explicitly
+- Warm, encouraging tone
+
+Then summarize current status and ask what to work on.
 ```
+
+**Common named persona variants:**
+
+| Persona | Traits | Good for |
+|---|---|---|
+| **Supportive** | Acknowledge progress, warm tone, softer pushback | Health, personal goals, sensitive topics |
+| **Builder** | Direct, execute and document, propose before acting | Technical builds, project management |
+| **Senior Advisor** | Proactive suggestions, industry standards, future-proofing, flag outdated patterns | System/ops work, architecture, configuration |
+| **Professional** | Formal tone, accuracy over speed, flag uncertainty | Research, writing, client-facing work |
+
+**When to use:** Any workspace with multiple efforts that benefit from different interaction styles.
 
 ---
 
@@ -145,6 +181,87 @@ Suggested starting point: ..."
 ```
 
 **When to use:** Any repeated action that needs consistent output — session greetings, status reports, project summaries, health check-ins. Store in `.claude/commands/` (gitignored — stays private).
+
+---
+
+## 7. Lazy Loading + Explicit Context Injection
+
+Two complementary patterns for keeping sessions lean as workstreams grow.
+
+**Problem:** Loading all workstream files on every session open wastes context and mixes concerns. A workspace with 4+ workstreams becomes unwieldy fast.
+
+**Pattern A — Lazy loading (keyword-triggered):**
+A trigger map file maps keywords to files. When a topic comes up mid-session, the relevant file loads on demand — not upfront.
+
+```markdown
+# _meta/TRIGGERS.md
+
+| Keywords / Topics | File to Load |
+|---|---|
+| home, garden, taxes, deck | `home/status.md` |
+| health, supplements, energy | health files |
+| template, framework, system | `template/status.md` |
+```
+
+**Pattern B — Explicit context injection (skill-triggered):**
+A `/open[Name]` skill deliberately loads a workstream when you're ready to focus on it. Shows active work and current priorities. Activates the workstream persona.
+
+```markdown
+# .claude/commands/openHomeProjects.md
+
+Read `home/status.md` and `home/project_plan.md`.
+
+Activate Home persona. Then show active work, now priorities, and supply needs.
+```
+
+**Combined `/open` flow:**
+```
+/open               → SESSION.md only (last 5 decisions + workstream menu)
+/openHomeProjects   → loads home context + activates home persona
+/openHealth         → loads health context + activates health persona
+```
+
+**Why both:** Lazy loading handles incidental references ("oh, by the way, what's the status on my deck?"). Explicit skills handle intentional focus shifts ("I want to work on home projects today").
+
+**Scaling rule:** Adding a new workstream = one trigger row + one skill file + one line in the `/open` menu.
+
+---
+
+## 8. Professional Opinions + Iterative Document Review
+
+For knowledge workers who regularly review documents, provide feedback, or craft professional responses — a persistent opinions file combined with versioned draft files creates a repeatable, AI-assisted review workflow.
+
+**Structure:**
+```
+[workstream]/
+├── opinions.md        ← standing professional stances; updated over time, applied to all reviews
+└── reviews/
+    ├── doc_response_v1.md
+    ├── doc_response_v2.md
+    └── ...
+```
+
+**opinions.md** stores reusable positions on technologies, methodologies, or standards. The AI loads and applies these automatically when doing analysis — no re-explaining required across sessions.
+
+```markdown
+## Technology & Methodology Stances
+
+### [Technology Name]
+**[Claim or comparison]**
+Your position here — the reasoning, the nuance, how strongly held.
+Updated as your views evolve.
+```
+
+**reviews/** stores versioned drafts of responses and analyses. Each version is a snapshot — iterate freely without losing prior drafts.
+
+**Workflow:**
+1. Load the document
+2. AI summarizes and asks for your positions on the key claims
+3. Positions recorded to opinions.md
+4. Draft response generated, saved as v1
+5. Iterate — each revision saved as a new version
+
+**When to use:** Document reviews, white paper feedback, technical evaluations, professional correspondence where your stance matters and will recur.
 
 ---
 
