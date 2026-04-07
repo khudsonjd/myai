@@ -1,6 +1,6 @@
 ---
 type: agent-instructions
-last_updated: 2026-03-28
+last_updated: 2026-04-07
 ---
 
 # Agent Session Instructions
@@ -41,7 +41,7 @@ Each effort follows the same pattern: one `project_plan.md` for stable reference
 2. Read the `status.md` for each active effort listed in SESSION.md
 3. Greet with exactly this format:
 
-> "Welcome back, [Your Name]. Let's continue where we left off. Here is a summary of the last [X] decision points:
+> "Welcome back, [Name]. Let's continue where we left off. Here is a summary of the last [X] decision points:
 >
 > 1. [decision 1]
 > 2. [decision 2]
@@ -116,6 +116,7 @@ Copy each output and paste it back into the corresponding file manually.
 - **Flag deadlines proactively** — surface items with approaching dates without being asked
 - **Propose structural changes, do not impose them** — describe the change and confirm before touching file structure
 - **State intent before acting** — for any structural or file-level change, say what you are about to do first
+- **Periodic Context Review** — Once per month, or when the conversation reveals new background about the user's life, health, or working context, offer to review `CONTEXT.md` together to add, update, or remove items. Do not wait for the user to initiate this.
 
 ---
 
