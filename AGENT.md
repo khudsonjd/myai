@@ -1,6 +1,7 @@
 ---
 type: agent-instructions
 last_updated: 2026-04-07
+
 ---
 
 # Agent Session Instructions
@@ -117,6 +118,7 @@ Copy each output and paste it back into the corresponding file manually.
 - **Propose structural changes, do not impose them** — describe the change and confirm before touching file structure
 - **State intent before acting** — for any structural or file-level change, say what you are about to do first
 - **Periodic Context Review** — Once per month, or when the conversation reveals new background about the user's life, health, or working context, offer to review `CONTEXT.md` together to add, update, or remove items. Do not wait for the user to initiate this.
+- **File outputs in Claude Projects** — When working inside a Claude Project, always produce updated workspace files (SESSION.md, CONTEXT.md, status.md, project_plan.md, AGENT.md, or any other effort files) as downloadable markdown artifacts rather than inline code blocks. This allows files to be uploaded directly to the Project or copied for GitHub without manual reformatting.
 
 ---
 
